@@ -3,6 +3,9 @@
 [![codecov](https://codecov.io/gh/Background-Sounds/Background-Sounds/branch/main/graph/badge.svg?token=ZQZQZQZQZQ)](https://codecov.io/gh/Background-Sounds/Background-Sounds)
 
 ## Technologies
+
+<img alt="TypeScript" src="https://img.shields.io/badge/typescript-%233178C6.svg?style=for-the-badge&logo=typescript&logoColor=white"/>
+
 <img alt="React" src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB"/>
 
 <img alt="Vite" src="https://img.shields.io/badge/vite-%23007ACC.svg?style=for-the-badge&logo=vite&logoColor=white"/>
@@ -34,7 +37,7 @@
 npm install
 ```
 
-5. Run 
+5. Run
 
 ```bash
 npm start
@@ -49,7 +52,6 @@ Give a ⭐ to show support for the project.
 - Checkout [Contribution Guidelines](./CONTRIBUTING.md) for more information.
 - Have a feature request? Feel free to create a issue for it.
 
-
 ## Thanks to all Contributors 💪
 
 Thanks a lot for contributing to Background Sounds.
@@ -57,5 +59,3 @@ Thanks a lot for contributing to Background Sounds.
 [![Contributors](https://contrib.rocks/image?repo=Vaporjawn/Background-Sounds)](https://github.com/Vaporjawn/Background-Sounds/graphs/contributors)
 
 ### Inspiration
-
-
