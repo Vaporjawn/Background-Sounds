@@ -55,6 +55,7 @@ https://github.com/Utkarshn10/Focusly
 
 ### Stats
 
+![GitHub package.json version](https://img.shields.io/github/package-json/v/Vaporjawn/Background-Sounds?style=for-the-badge)
 ![GitHub issues](https://img.shields.io/github/issues/Vaporjawn/Background-Sounds?style=for-the-badge)
 ![GitHub forks](https://img.shields.io/github/forks/Vaporjawn/Background-Sounds?style=for-the-badge)
 ![GitHub stars](https://img.shields.io/github/stars/Vaporjawn/Background-Sounds?style=for-the-badge)
