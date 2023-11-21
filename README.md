@@ -47,7 +47,8 @@ Give a ⭐ to show support for the project.
 
 Thanks a lot for contributing to Background Sounds.
 
-[![Contributors](https://contrib.rocks/image?repo=Vaporjawn/Background-Sounds)](https://github.com/Vaporjawn/Background-Sounds/graphs/contributors)
+
+[![Contributors](https://contrib.rocks/image?repo=vaporjawn/Background-Sounds)](https://github.com/vaporjawn/Background-Sounds/graphs/contributors)
 
 ### Inspiration
 
