@@ -1,5 +1,5 @@
 import { Routes as Router, Route, BrowserRouter } from 'react-router-dom';
-import HomePage from "./frontend/pages/homePage";
+import HomePage from './frontend/pages/homePage';
 
 const Routes = () => {
   return (
