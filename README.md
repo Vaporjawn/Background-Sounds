@@ -1,6 +1,6 @@
 <div align="center">
 
-# Background Sounds
+# Background Sounds - Chrome Extension
 
 <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
 
@@ -9,15 +9,21 @@
 
 </div>
 
+## About
+
+A simple Chrome extension timer for tracking time and focus sessions. Built with React, TypeScript, and Vite.
+
 ## Technologies
 
-<img alt="TypeScript" src="https://img.shields.io/badge/typescript-%233178C6.svg?style=for-the-badge&logo=typescript&logoColor=white"/><img alt="React" src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB"/><img alt="Vite" src="https://img.shields.io/badge/vite-%23007ACC.svg?style=for-the-badge&logo=vite&logoColor=white"/><img alt="SWC" src="https://img.shields.io/badge/swc-%23F7B93E.svg?style=for-the-badge&logo=swc&logoColor=white"/><img alt="React router" src="https://img.shields.io/badge/reactrouter-%230671D5.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB"/><img alt="CodeCov" src="https://img.shields.io/badge/codecov-%23ff0077.svg?style=for-the-badge&logo=codecov&logoColor=white"/><img alt="Prettier" src="https://img.shields.io/badge/prettier-%23F7B93E.svg?style=for-the-badge&logo=prettier&logoColor=white"/><img alt="ESLint" src="https://img.shields.io/badge/eslint-%234B32C3.svg?style=for-the-badge&logo=eslint&logoColor=white"/><img alt="Jest" src="https://img.shields.io/badge/jest-%23C21325.svg?style=for-the-badge&logo=jest&logoColor=white"/><img alt="GitHub Pages" src="https://img.shields.io/badge/githubpages-%23181717.svg?style=for-the-badge&logo=github&logoColor=white"/>
+<img alt="TypeScript" src="https://img.shields.io/badge/typescript-%233178C6.svg?style=for-the-badge&logo=typescript&logoColor=white"/><img alt="React" src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB"/><img alt="Vite" src="https://img.shields.io/badge/vite-%23007ACC.svg?style=for-the-badge&logo=vite&logoColor=white"/><img alt="SWC" src="https://img.shields.io/badge/swc-%23F7B93E.svg?style=for-the-badge&logo=swc&logoColor=white"/><img alt="Chrome Extension" src="https://img.shields.io/badge/chrome_extension-4285F4.svg?style=for-the-badge&logo=googlechrome&logoColor=white"/><img alt="CodeCov" src="https://img.shields.io/badge/codecov-%23ff0077.svg?style=for-the-badge&logo=codecov&logoColor=white"/><img alt="Prettier" src="https://img.shields.io/badge/prettier-%23F7B93E.svg?style=for-the-badge&logo=prettier&logoColor=white"/><img alt="ESLint" src="https://img.shields.io/badge/eslint-%234B32C3.svg?style=for-the-badge&logo=eslint&logoColor=white"/><img alt="Jest" src="https://img.shields.io/badge/jest-%23C21325.svg?style=for-the-badge&logo=jest&logoColor=white"/>
 
 </div>
 
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
 ## Installation
+
+### Development Setup
 
 1. Fork the repository
 2. Clone the project
@@ -28,13 +34,35 @@
 npm install
 ```
 
-5. Run
+5. Build the extension
 
 ```bash
-npm start
+npm run build
 ```
 
-Give a ⭐ to show support for the project.
+### Loading the Extension in Chrome
+
+1. Open Chrome and navigate to `chrome://extensions`
+2. Enable **"Developer mode"** using the toggle in the top-right corner
+3. Click **"Load unpacked"**
+4. Select the `dist/` folder from the project directory
+5. The extension icon should appear in your Chrome toolbar
+
+### Using the Extension
+
+- Click the extension icon in your Chrome toolbar to open the timer popup
+- Use Start/Stop buttons to control the timer
+- Use Clear button to reset the timer
+
+## Development
+
+Run the development server:
+
+```bash
+npm run dev
+```
+
+Note: For Chrome extension development, you'll need to rebuild and reload the extension in Chrome after making changes.
 
 ## Contributing
 
@@ -42,6 +70,17 @@ Give a ⭐ to show support for the project.
 - Feel free to submit feature requests, UI updates, bugs as issues.
 - Checkout [Contribution Guidelines](./CONTRIBUTING.md) for more information.
 - Have a feature request? Feel free to create a issue for it.
+
+## Publishing to Chrome Web Store (Optional)
+
+To publish this extension to the Chrome Web Store:
+
+1. Create a developer account at [Chrome Web Store Developer Dashboard](https://chrome.google.com/webstore/devconsole)
+2. Build the extension: `npm run build`
+3. Zip the `dist/` folder
+4. Upload the zip file to the Chrome Web Store
+5. Fill in the required store listing information
+6. Submit for review
 
 ## Thanks to all Contributors 💪
 
