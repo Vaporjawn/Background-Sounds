@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import TimerClearButton from './components/timerClearButton';
 import TimerStartButton from './components/timerStartButton';
 import TimerStopButton from './components/timerStopButton';
@@ -6,19 +6,24 @@ import TimerStopButton from './components/timerStopButton';
 const Timer = () => {
   const [time, setTime] = useState<number>(0);
   const [timerOn, setTimerOn] = useState<boolean>(false);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | undefined>(undefined);
 
   useEffect(() => {
-    let interval: NodeJS.Timeout = setInterval(() => {}, 10);
-
     if (timerOn) {
-      interval = setInterval(() => {
+      intervalRef.current = setInterval(() => {
         setTime(prevTime => prevTime + 0.01);
       }, 10);
-    } else {
-      clearInterval(interval);
+    } else if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = undefined;
     }
 
-    return () => clearInterval(interval);
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = undefined;
+      }
+    };
   }, [timerOn]);
 
   return (
