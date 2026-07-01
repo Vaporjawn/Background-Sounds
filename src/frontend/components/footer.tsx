@@ -16,7 +16,7 @@ const Footer = () => {
         color: '#666',
       }}
     >
-      <p>© 2023 Background Sounds. All rights reserved.</p>
+      <p>© {new Date().getFullYear()} Background Sounds. All rights reserved.</p>
     </footer>
   );
 };
