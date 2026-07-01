@@ -10,6 +10,7 @@
     "dev": "vite",
     "start": "vite --host",
     "build": "tsc && vite build",
+    "typecheck": "tsc --noEmit",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx}\"",
