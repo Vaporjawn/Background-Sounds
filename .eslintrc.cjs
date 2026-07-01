@@ -21,7 +21,13 @@ module.exports = {
       'import/no-unresolved': 'off',
       'import/no-import-module-exports': 'off',
       '@typescript-eslint/no-non-null-assertion': 'off',
-      'no-unused-vars': 'warn',
+      // Disabled in favor of @typescript-eslint/no-unused-vars (already
+      // enabled as an error via plugin:@typescript-eslint/recommended
+      // above). The base rule doesn't understand TypeScript-only syntax
+      // and false-positives on things like named parameters in function
+      // type literals (e.g. `(state: Foo) => void`), flagging valid code
+      // as an unused variable.
+      'no-unused-vars': 'off',
       'prefer-const': 'warn',
       'prefer-destructuring': 'warn',
       'semi': 'warn',
