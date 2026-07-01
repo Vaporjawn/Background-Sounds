@@ -1,0 +1,13 @@
+# Normalize line endings to LF for all text files, regardless of the
+# committer's platform, to match the repo's .editorconfig/.prettierrc
+# (2-space indent, LF endings).
+* text=auto eol=lf
+
+# Binary assets should never be subject to line-ending normalization or
+# text-based diffing.
+*.png binary
+*.ico binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.svg -text
