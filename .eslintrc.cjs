@@ -10,7 +10,7 @@ module.exports = {
     'plugin:import/recommended',
     'plugin:import/typescript',
     'plugin:jsx-a11y/recommended',
-    // 'plugin:prettier/recommended',
+    'plugin:prettier/recommended',
   ],
   settings: {
     react: {
