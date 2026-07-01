@@ -1,4 +1,4 @@
-import { UseStateNumber } from '../../../../backend/types/useStateNumber';
+import { UseStateNumber } from '../../../../types/useStateNumber';
 
 const clearTimer = (args: { setTime: UseStateNumber }) => {
   const { setTime } = args;

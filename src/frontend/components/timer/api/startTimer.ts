@@ -1,4 +1,4 @@
-import { UseStateBoolean } from '../../../../backend/types/useStateBoolean';
+import { UseStateBoolean } from '../../../../types/useStateBoolean';
 
 const startTimer = (args: { setTimerOn: UseStateBoolean }) => {
   const { setTimerOn } = args;

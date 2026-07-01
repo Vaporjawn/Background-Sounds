@@ -1,4 +1,4 @@
-import { UseStateBoolean } from '../../../../backend/types/useStateBoolean';
+import { UseStateBoolean } from '../../../../types/useStateBoolean';
 import startTimer from '../api/startTimer';
 
 const TimerStartButton = (args: { timerOn: boolean; setTimerOn: UseStateBoolean }) => {
