@@ -51,6 +51,37 @@ $ git add .
 $ git add <some files>
 ```
 
+### Project structure
+
+- `src/frontend/pages/` - top-level pages (currently just the popup's `HomePage`).
+- `src/frontend/components/` - UI components. The timer feature lives under
+  `src/frontend/components/timer/`, split into `api/` (state-transition
+  functions like `startTimer`/`stopTimer`/`clearTimer`, plus
+  `chrome.storage` persistence in `timerStorage.ts`) and `components/`
+  (the Start/Stop/Clear buttons).
+- `src/types/` - shared TypeScript type aliases (e.g. `UseStateBoolean`,
+  `UseStateNumber`). This is a client-only extension with no backend, so
+  don't reintroduce a `src/backend/` split.
+- `public/manifest.json` - the Chrome extension manifest (permissions,
+  icons, popup entry point).
+
+### Testing
+
+- Tests are colocated with the code they test, using a `.test.ts` /
+  `.test.tsx` suffix (e.g. `footer.tsx` + `footer.test.tsx`), not gathered
+  into a separate top-level test folder.
+- We use Jest + `@testing-library/react`. Prefer testing observable
+  behavior (rendered text, button roles, click handlers) over
+  implementation details.
+- `jest.config.cjs` enforces minimum coverage thresholds
+  (`coverageThreshold`) - `npm run test:coverage` fails if a change drops
+  coverage below them.
+- Code that touches `chrome.storage` should mock the `chrome` global (see
+  `src/frontend/components/timer/api/timerStorage.test.ts` for the
+  pattern) rather than requiring the extension environment.
+- Before opening a PR, run `npm run check` (build, format check, lint,
+  test:coverage - see the README's "Repository Health" section) to make
+  sure it passes everything CI will run.
 
 ## Commit the changes
 
