@@ -1,4 +1,4 @@
-﻿name: Auto-assign Dependabot PRs
+name: Auto-assign Dependabot PRs
 
 on:
   pull_request:
@@ -13,7 +13,7 @@ jobs:
     if: github.actor == 'dependabot[bot]'
     steps:
       - name: Assign PR to owner
-        uses: actions/github-script@v7
+        uses: actions/github-script@v9
         with:
           script: |
             github.rest.issues.addAssignees({
