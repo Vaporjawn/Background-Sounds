@@ -5,7 +5,7 @@
 <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
 
 
-[![Installation](https://github.com/Vaporjawn/Background-Sounds/actions/workflows/installation.js.yml/badge.svg)](https://github.com/Vaporjawn/Background-Sounds/actions/workflows/installation.js.yml)[![Build](https://github.com/Vaporjawn/Background-Sounds/actions/workflows/build.js.yml/badge.svg)](https://github.com/Vaporjawn/Background-Sounds/actions/workflows/build.js.yml)[![Linting](https://github.com/Vaporjawn/Background-Sounds/actions/workflows/linting.js.yml/badge.svg)](https://github.com/Vaporjawn/Background-Sounds/actions/workflows/linting.js.yml)[![Tests](https://github.com/Vaporjawn/Background-Sounds/actions/workflows/testing.js.yml/badge.svg)](https://github.com/Vaporjawn/Background-Sounds/actions/workflows/testing.js.yml)[![Security Scan](https://github.com/Vaporjawn/Background-Sounds/actions/workflows/securityscan.yml/badge.svg)](https://github.com/Vaporjawn/Background-Sounds/actions/workflows/securityscan.yml)
+[![CI](https://github.com/Vaporjawn/Background-Sounds/actions/workflows/ci.yml/badge.svg)](https://github.com/Vaporjawn/Background-Sounds/actions/workflows/ci.yml)[![CodeQL](https://github.com/Vaporjawn/Background-Sounds/actions/workflows/codeql.yml/badge.svg)](https://github.com/Vaporjawn/Background-Sounds/actions/workflows/codeql.yml)[![Security Scan](https://github.com/Vaporjawn/Background-Sounds/actions/workflows/securityscan.yml/badge.svg)](https://github.com/Vaporjawn/Background-Sounds/actions/workflows/securityscan.yml)[![codecov](https://codecov.io/gh/Vaporjawn/Background-Sounds/graph/badge.svg)](https://codecov.io/gh/Vaporjawn/Background-Sounds)
 
 </div>
 
@@ -53,6 +53,21 @@ npm run build
 - Click the extension icon in your Chrome toolbar to open the timer popup
 - Use Start/Stop buttons to control the timer
 - Use Clear button to reset the timer
+- The timer keeps running even after you close the popup - reopening it
+  shows the correct elapsed time, picking back up right where it left off
+
+### Timer Persistence
+
+Chrome discards a popup's entire in-memory state every time it closes, so
+without extra handling, closing the popup would reset the timer back to
+`0.00 seconds`. To prevent that, the extension persists `{ time, timerOn,
+updatedAt }` to `chrome.storage.local` on every meaningful change (start,
+stop, clear) and rehydrates it on mount. If a run was in progress when the
+popup last closed, the elapsed wall-clock time since `updatedAt` is folded
+back in on reopen, so the stopwatch reads as if it had kept counting the
+whole time. This is why the extension requests the `"storage"` permission
+in `public/manifest.json` - it's used exclusively for this local,
+on-device persistence and nothing is sent off the device.
 
 ## Development
 
@@ -63,6 +78,26 @@ npm run dev
 ```
 
 Note: For Chrome extension development, you'll need to rebuild and reload the extension in Chrome after making changes.
+
+### Repository Health
+
+| Script | What it does |
+| --- | --- |
+| `npm run dev` | Start the Vite dev server (runs as a regular webpage, not inside the extension popup - `chrome.storage` calls are automatically no-ops here). |
+| `npm run build` | Type-check (`tsc`) then produce a production build in `dist/`. |
+| `npm run typecheck` | Type-check only (`tsc --noEmit`), without a full bundle build - useful for a fast fail in CI/local dev. |
+| `npm run lint` | ESLint across the project (`--max-warnings 0`, so any warning fails the command). |
+| `npm run format` | Format `src/**/*.{ts,tsx}` in place with Prettier. |
+| `npm run format:check` | Check Prettier formatting without writing any files. |
+| `npm test` / `npm run test:watch` | Run the Jest test suite (optionally in watch mode). |
+| `npm run test:coverage` | Run the test suite with coverage; enforces the thresholds in `jest.config.cjs`. |
+| `npm run check` | Everything CI checks: build, format:check, lint, and test:coverage. |
+
+A pre-commit hook (Husky + lint-staged) runs `eslint --fix` on staged
+`*.{ts,tsx}` files automatically. CI (`.github/workflows/ci.yml`) runs
+build/lint/test across Node 18/20/22, uploads coverage to Codecov, runs a
+non-blocking `npm audit`, and packages a Chrome-Web-Store-ready `dist/` zip
+artifact on every push to `main` or a version tag.
 
 ## Contributing
 
@@ -76,11 +111,17 @@ Note: For Chrome extension development, you'll need to rebuild and reload the ex
 To publish this extension to the Chrome Web Store:
 
 1. Create a developer account at [Chrome Web Store Developer Dashboard](https://chrome.google.com/webstore/devconsole)
-2. Build the extension: `npm run build`
-3. Zip the `dist/` folder
-4. Upload the zip file to the Chrome Web Store
-5. Fill in the required store listing information
-6. Submit for review
+2. Get a `dist/` zip, either:
+   - Download the `background-sounds-extension` artifact from the latest
+     successful run of the [CI workflow](https://github.com/Vaporjawn/Background-Sounds/actions/workflows/ci.yml)
+     on `main` (or a version tag) - built automatically, no local steps
+     needed, **or**
+   - Build it yourself: `npm run build`, then zip the *contents* of `dist/`
+     (not the `dist/` folder itself - `manifest.json` needs to be at the
+     root of the archive)
+3. Upload the zip file to the Chrome Web Store
+4. Fill in the required store listing information
+5. Submit for review
 
 ## Thanks to all Contributors 💪
 
