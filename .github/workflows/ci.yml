@@ -82,6 +82,26 @@ jobs:
           files: ./coverage/lcov.info
           fail_ci_if_error: false
 
+  audit:
+    name: npm audit
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: "npm"
+      - run: npm ci
+      # Non-blocking for now: there are pre-existing high/critical advisories
+      # in transitive devDependencies (tracked for remediation via staged
+      # dependency upgrades) that would otherwise fail every run. Revisit
+      # removing continue-on-error once those are resolved.
+      - name: Audit dependencies (high/critical only)
+        run: npm audit --audit-level=high
+        continue-on-error: true
+
   package:
     name: Package extension build artifact
     needs: [build, lint, test]
