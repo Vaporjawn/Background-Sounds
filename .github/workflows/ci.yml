@@ -1,0 +1,82 @@
+# Consolidated CI: build, lint, and test, each as their own job (matching
+# the previous build.js.yml/linting.js.yml/testing.js.yml so PR/branch
+# status checks stay granular) across the same Node.js matrix. Replaces
+# build.js.yml, installation.js.yml, linting.js.yml, and testing.js.yml,
+# which previously each ran `npm ci` independently across the same 3
+# Node versions with heavy overlap. A standalone "installation" job isn't
+# included: build/lint/test already each run `npm ci` and would fail if
+# installation itself were broken, so a dedicated install-only job added
+# no unique signal.
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - run: npm ci
+      - run: npm run build
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - run: npm ci
+      - run: npm run lint
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - run: npm ci
+      - run: npm run test:coverage
+      - name: Upload coverage to Codecov
+        # Coverage is identical across the Node matrix; only upload once
+        # to avoid redundant/duplicate reports on codecov.io.
+        if: matrix.node-version == '20.x'
+        uses: codecov/codecov-action@v5
+        with:
+          files: ./coverage/lcov.info
+          fail_ci_if_error: false
