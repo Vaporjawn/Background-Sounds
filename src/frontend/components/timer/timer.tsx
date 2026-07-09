@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import TimerClearButton from './components/timerClearButton';
 import TimerStartButton from './components/timerStartButton';
 import TimerStopButton from './components/timerStopButton';
@@ -15,12 +15,18 @@ const Timer = () => {
   // depending on `time` (which would otherwise restart the interval, and
   // therefore reset the elapsed-time baseline, on every tick).
   const timeRef = useRef(time);
-  // Mirrors the latest render's state (updated unconditionally, not via an
-  // effect) so the async storage callback below can check "did the user
-  // already interact with the timer while the read was in flight?" without
-  // depending on stale closure values.
+  // Mirrors the latest render's state so the async storage callback below
+  // can check "did the user already interact with the timer while the read
+  // was in flight?" without depending on stale closure values. Synced via
+  // useLayoutEffect (not a plain useEffect) so it updates synchronously
+  // right after commit, before any paint or queued callback can observe a
+  // stale value - mutating `.current` directly during render is unsafe
+  // under React's rules (a render can be discarded or re-run without
+  // committing) and is flagged by react-hooks/refs.
   const latestStateRef = useRef({ time, timerOn });
-  latestStateRef.current = { time, timerOn };
+  useLayoutEffect(() => {
+    latestStateRef.current = { time, timerOn };
+  });
 
   // Rehydrate from chrome.storage on mount. Chrome unmounts (and discards
   // all React state from) the extension popup every time it closes, so
